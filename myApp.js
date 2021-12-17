@@ -1,9 +1,14 @@
+require('dotenv').config();
 var express = require('express');
 const res = require('express/lib/response');
 var app = express();
-require('dotenv').config();
 
 app.use("/public", express.static(__dirname + "/public"));
+
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.path} - ${req.ip}`);
+    next();
+});
 
 app.get("/", (req, res) => res.sendFile(__dirname + "/views/index.html"));
 
@@ -16,38 +21,5 @@ app.get("/json", (req, res) => {
     
     res.json({message: message});
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
  module.exports = app;
